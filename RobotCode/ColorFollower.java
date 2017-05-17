@@ -26,14 +26,12 @@ public class ColorFollower {
             if (light.getNormalizedLightValue() > 500) {
                 pilot.stop();
             } else {
-                pilot.stop();
                 pilot.forward();
             }
             if (!pilot.isMoving()) {
                 pilot.rotate(-270, true);
             }
             if (Button.readButtons() > 0) break;
-            Delay.msDelay(150);
         }
     }
 }
