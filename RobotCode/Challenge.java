@@ -4,18 +4,15 @@ import lejos.robotics.navigation.DifferentialPilot;
 
 public class Challenge implements FeatureListener, SensorPortListener {
 
-    public static DifferentialPilot pilot;
-    public static int MAX_DETECT = 80;
+    public DifferentialPilot pilot;
+    public int MAX_DETECT = 80;
     
-    public static void main(String[] args) {
-        Challenge C = new Challenge();
+    public Challenge() {
         UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1);
-        LightSensor light = new LightSensor(SensorPort.S2);
+        SensorPort.S2.addSensorPortListener(this);
         RangeFeatureDetector fd = new RangeFeatureDetector(us, MAX_DETECT, 500);
-        fd.addListener(C);
-        C.pilot = new DifferentialPilot(5.315f, 5.355f, 11.4f, Motor.A, Motor.C, false);
-        pilot.travel(500);
-        Button.ENTER.waitForPressAndRelease();
+        fd.addListener(this);
+        this.pilot = new DifferentialPilot(5.315f, 5.355f, 11.4f, Motor.A, Motor.C, false);
     }
     
     public void featureDetected(Feature feature, FeatureDetector detector) {
@@ -23,6 +20,20 @@ public class Challenge implements FeatureListener, SensorPortListener {
     }
     
     public void stateChanged(SensorPort aSource, int aOldValue, int aNewValue) {
-        
+        LCD.drawString(" "+aNewValue,3,4);
+        if (aNewValue >= 860) {
+            pilot.quickStop();
+            LCD.drawString(" "+aNewValue,2,4);
+            pilot.rotate(180);
+            pilot.forward();
+        }
+    }
+    
+    public void go() {
+        pilot.forward();
+    }
+    
+    public void go(double d) {
+        pilot.travel(d, true);
     }
 }
