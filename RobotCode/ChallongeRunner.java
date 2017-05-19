@@ -2,9 +2,9 @@ import lejos.nxt.*;
 import lejos.robotics.objectdetection.*;
 import lejos.robotics.navigation.DifferentialPilot;
 
-public class ChallengeRunner {
+public class ChallongeRunner {
     public static void main(String[] args) {
-        Challenge c = new Challenge();
+        Challonge c = new Challonge();
         c.go();
         Button.ENTER.waitForPressAndRelease();
         for (;;) {
