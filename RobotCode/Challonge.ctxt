@@ -1,16 +1,12 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Challonge()
-comment1.params=
-comment1.target=void\ circlePattern()
-comment2.params=
-comment2.target=void\ run()
-comment3.params=feature\ detector
-comment3.target=void\ featureDetected(lejos.robotics.objectdetection.Feature,\ lejos.robotics.objectdetection.FeatureDetector)
-comment4.params=aSource\ aOldValue\ aNewValue
-comment4.target=void\ stateChanged(lejos.nxt.SensorPort,\ int,\ int)
-comment5.params=
-comment5.target=void\ go()
-comment6.params=d
-comment6.target=void\ go(double)
-numComments=7
+comment1.params=feature\ detector
+comment1.target=void\ featureDetected(lejos.robotics.objectdetection.Feature,\ lejos.robotics.objectdetection.FeatureDetector)
+comment2.params=aSource\ aOldValue\ aNewValue
+comment2.target=void\ stateChanged(lejos.nxt.SensorPort,\ int,\ int)
+comment3.params=
+comment3.target=void\ go()
+comment4.params=d
+comment4.target=void\ go(double)
+numComments=5

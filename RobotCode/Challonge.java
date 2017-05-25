@@ -16,7 +16,7 @@ public class Challonge implements FeatureListener, SensorPortListener {
      * 
      */
     public byte state;
-
+    
     public Challonge() {
         UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1);
         RangeFeatureDetector fd = new RangeFeatureDetector(us, MAX_DETECT, 20);
@@ -26,27 +26,17 @@ public class Challonge implements FeatureListener, SensorPortListener {
         this.pilot.setRotateSpeed(100);
         this.state = 0;
     }
-
-    public void circlePattern()
-    {
-        while(true)
-        {
-            pilot.steer(10);
-        }
-    } 
-    
-    public void run() {
-    }
     
     public void featureDetected(Feature feature, FeatureDetector detector)
     {
         LCD.drawString("detected",3,4);
         if (this.state == 0 && feature.getRangeReading().getRange() < 20) {
-            pilot.rotate(20);
             pilot.travel(-10);
-        } else if (this.state == 0) {
+            pilot.rotate(20);
+        } else if (this.state == 0 && feature.getRangeReading().getRange() >= 20) {
             this.state = 1;
-        } else if (this.state == 1 && feature.getRangeReading().getRange() < 50) {
+            pilot.travel(500, true);
+        } else if (this.state == 1 && feature.getRangeReading().getRange() < 30) {
             this.state = 2;
             pilot.travel(500, true);
         }
@@ -55,7 +45,7 @@ public class Challonge implements FeatureListener, SensorPortListener {
 
     public void stateChanged(SensorPort aSource, int aOldValue, int aNewValue) {
         LCD.drawString(" "+aNewValue,3,4);
-        if (aNewValue >= 860) {
+        if ((this.state == 0 || this.state == 1 || this.state == 2) && aNewValue >= 860) {
             this.state = 3;
             pilot.travel(-10);
             pilot.rotate(20);
