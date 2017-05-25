@@ -6,7 +6,7 @@ import lejos.util.*;
 public class Challonge implements FeatureListener, SensorPortListener {
 
     public DifferentialPilot pilot;
-    public final int MAX_DETECT = 100;
+    public final int MAX_DETECT = 80;
     
     /*
      * 0 = in box
@@ -30,13 +30,13 @@ public class Challonge implements FeatureListener, SensorPortListener {
     public void featureDetected(Feature feature, FeatureDetector detector)
     {
         LCD.drawString("detected",3,4);
-        if (this.state == 0 && feature.getRangeReading().getRange() < 20) {
+        if (this.state == 0 && feature.getRangeReading().getRange() < 25) {
             pilot.travel(-10);
             pilot.rotate(20);
-        } else if (this.state == 0 && feature.getRangeReading().getRange() >= 20) {
+        } else if (this.state == 0 && feature.getRangeReading().getRange() >= 25) {
             this.state = 1;
             pilot.travel(500, true);
-        } else if (this.state == 1 && feature.getRangeReading().getRange() < 30) {
+        } else if (this.state == 1) {
             this.state = 2;
             pilot.travel(500, true);
         }
@@ -48,7 +48,7 @@ public class Challonge implements FeatureListener, SensorPortListener {
         if ((this.state == 0 || this.state == 1 || this.state == 2) && aNewValue >= 860) {
             this.state = 3;
             pilot.travel(-10);
-            pilot.rotate(20);
+            pilot.rotate(45);
             this.state = 1;
             pilot.rotateLeft();
         }
